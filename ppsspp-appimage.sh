@@ -8,8 +8,6 @@ ICON=ppsspp.png
 
 export ARCH="$(uname -m)"
 export APPIMAGE_EXTRACT_AND_RUN=1
-export VERSION=$(pacman -Q "$PACKAGE" | awk 'NR==1 {print $2; exit}')
-echo "$VERSION" > ~/version
 
 UPINFO="gh-releases-zsync|$(echo "$GITHUB_REPOSITORY" | tr '/' '|')|latest|*$ARCH.AppImage.zsync"
 LIB4BN="https://raw.githubusercontent.com/VHSgunzo/sharun/refs/heads/main/lib4bin"
@@ -48,6 +46,9 @@ xvfb-run -d -- ./lib4bin -p -v -e -s -k \
 echo "Preparing sharun..."
 ln -s ./bin/PPSSPPSDL ./AppRun
 ./sharun -g
+
+VERSION="$(./AppRun --version)"
+echo "$VERSION" > ~/version
 
 # MAKE APPIMAGE WITH URUNTIME
 cd ..
